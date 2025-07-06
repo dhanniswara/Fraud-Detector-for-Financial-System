@@ -22,14 +22,24 @@ function App() {
     riskScore: 0
   });
 
+  const [transactions, setTransactions] = useState([]);
+  const [riskScores, setRiskScores] = useState([]);
+  const [alerts, setAlerts] = useState([]);
+
   useEffect(() => {
     checkSystemHealth();
     fetchStats();
+    fetchTransactions();
+    fetchRiskScores();
+    fetchAlerts();
     
     // Poll for updates every 30 seconds
     const interval = setInterval(() => {
       checkSystemHealth();
       fetchStats();
+      fetchTransactions();
+      fetchRiskScores();
+      fetchAlerts();
     }, 30000);
 
     return () => clearInterval(interval);
@@ -84,6 +94,48 @@ function App() {
     }
   };
 
+  const fetchTransactions = async () => {
+    try {
+      const response = await axios.get('http://localhost:8001/transactions/recent?limit=50');
+      setTransactions(response.data || []);
+    } catch (error) {
+      console.error('Error fetching transactions:', error);
+    }
+  };
+
+  const fetchRiskScores = async () => {
+    try {
+      const response = await axios.get('http://localhost:8002/predictions/recent?limit=50');
+      setRiskScores(response.data || []);
+    } catch (error) {
+      console.error('Error fetching risk scores:', error);
+    }
+  };
+
+  const fetchAlerts = async () => {
+    try {
+      const response = await axios.get('http://localhost:8003/alerts/recent?limit=50');
+      setAlerts(response.data || []);
+    } catch (error) {
+      console.error('Error fetching alerts:', error);
+    }
+  };
+
+  const handleSystemStart = () => {
+    console.log('Starting system...');
+    // TODO: Implement system start API call
+  };
+
+  const handleSystemStop = () => {
+    console.log('Stopping system...');
+    // TODO: Implement system stop API call
+  };
+
+  const handleSystemRestart = () => {
+    console.log('Restarting system...');
+    // TODO: Implement system restart API call
+  };
+
   const getStatusColor = (status) => {
     switch (status) {
       case 'healthy': return 'text-green-600';
@@ -108,10 +160,33 @@ function App() {
     { id: 'system', name: 'System', icon: '⚙️' }
   ];
 
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'dashboard':
+        return <Dashboard stats={stats} />;
+      case 'transactions':
+        return <TransactionFeed transactions={transactions} />;
+      case 'risk':
+        return <RiskScores riskScores={riskScores} />;
+      case 'alerts':
+        return <AlertPanel alerts={alerts} />;
+      case 'system':
+        return (
+          <SystemControl 
+            onStart={handleSystemStart}
+            onStop={handleSystemStop}
+            onRestart={handleSystemRestart}
+          />
+        );
+      default:
+        return <Dashboard stats={stats} />;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="gradient-bg text-white shadow-lg">
+      <header className="bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center">
@@ -136,4 +211,32 @@ function App() {
 
       {/* Navigation */}
       <nav className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex space-x-8">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === tab.id
+                    ? 'border-blue-500 text-blue-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                <span className="mr-2">{tab.icon}</span>
+                {tab.name}
+              </button>
+            ))}
+          </div>
+        </div>
+      </nav>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        {renderContent()}
+      </main>
+    </div>
+  );
+}
+
+export default App;
