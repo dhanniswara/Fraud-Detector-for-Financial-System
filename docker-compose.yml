@@ -1,39 +1,33 @@
-version: '3.8'
-
 services:
   kafka:
     image: confluentinc/cp-kafka:7.3.0
     hostname: kafka
     ports:
       - "9092:9092"
-      - "9093:9093"  # controller listener
+      - "9093:9093"
     environment:
-      # ==== KRaft core settings ====
-      KAFKA_CLUSTER_ID: "REPLACE_WITH_YOUR_CLUSTER_ID"
-      KAFKA_NODE_ID: 1
+      CLUSTER_ID:        "0680b28ae438466a99b81b"
+      KAFKA_CLUSTER_ID:  "0680b28ae438466a99b81b"
+      KAFKA_NODE_ID:     1
       KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
 
-      # ==== Listeners & networking ====
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: \
-        CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_LISTENERS:                    PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS:         PLAINTEXT://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME:   PLAINTEXT
 
-      # ==== Logs & topics replication ====
-      KAFKA_LOG_DIRS: /tmp/kraft-combined-logs
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_LOG_DIRS:                     /tmp/kraft-combined-logs
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR:             1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR:     1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR:                1
 
     volumes:
       - kafka_data:/tmp/kraft-combined-logs
 
   mongodb:
     image: mongo:5.0
-    hostname: mongodb
     ports:
       - "27017:27017"
     environment:
@@ -44,7 +38,6 @@ services:
 
   redis:
     image: redis:7-alpine
-    hostname: redis
     ports:
       - "6379:6379"
     command: redis-server --appendonly yes
