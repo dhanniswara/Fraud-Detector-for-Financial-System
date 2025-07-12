@@ -163,7 +163,7 @@ function App() {
   const renderContent = () => {
     switch (activeTab) {
       case 'dashboard':
-        return <Dashboard stats={stats} />;
+        return <Dashboard stats={stats} transactions={transactions} alerts={alerts} riskScores={riskScores} />;
       case 'transactions':
         return <TransactionFeed transactions={transactions} />;
       case 'risk':
@@ -179,7 +179,7 @@ function App() {
           />
         );
       default:
-        return <Dashboard stats={stats} />;
+        return <Dashboard stats={stats} transactions={transactions} alerts={alerts} riskScores={riskScores} />;
     }
   };
 
