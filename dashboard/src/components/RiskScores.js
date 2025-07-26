@@ -222,3 +222,87 @@ const RiskScores = () => {
         </div>
 
         <div className="bg-white p-6 rounded-lg shadow-
+        <div className="bg-white p-6 rounded-lg shadow-lg card-shadow">
+          <h4 className="text-md font-medium text-gray-900 mb-3">🔴 High Risk Transactions</h4>
+          <div className="text-3xl font-bold text-red-600">
+            {riskData.filter(d => d.category === 'High Risk').length}
+          </div>
+          <p className="text-sm text-gray-500">
+            {((riskData.filter(d => d.category === 'High Risk').length / riskData.length) * 100).toFixed(1)}% of total
+          </p>
+        </div>
+      </div>
+
+      {/* Model Performance Table */}
+      <div className="bg-white shadow-lg rounded-lg card-shadow">
+        <div className="px-6 py-4 border-b border-gray-200">
+          <h3 className="text-lg font-medium text-gray-900">
+            📊 Detailed Model Metrics
+          </h3>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Model
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Accuracy
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Precision
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Recall
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  F1 Score
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Status
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {modelPerformance.map((model) => (
+                <tr key={model.model} className="hover:bg-gray-50">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                    {model.model}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <div className="flex items-center">
+                      <div className="w-16 bg-gray-200 rounded-full h-2 mr-2">
+                        <div 
+                          className="bg-blue-600 h-2 rounded-full" 
+                          style={{ width: `${model.accuracy * 100}%` }}
+                        ></div>
+                      </div>
+                      {(model.accuracy * 100).toFixed(1)}%
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {(model.precision * 100).toFixed(1)}%
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {(model.recall * 100).toFixed(1)}%
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {(model.f1Score * 100).toFixed(1)}%
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                      ✅ Active
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default RiskScores;
