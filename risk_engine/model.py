@@ -214,38 +214,4 @@ class FraudDetectionModel:
             joblib.dump({
                 'scaler': self.scaler,
                 'rf_model': self.rf_model,
-                'isolation_forest': self.isolation_forest,
-                'mlp_model': self.mlp_model,
-                'graph': self.graph,
-                'is_trained': self.is_trained
-            }, filepath)
-            
-            if self.lstm_model:
-                self.lstm_model.save(filepath.replace('.pkl', '_lstm.h5'))
-            
-            return True
-        except Exception as e:
-            print(f"Error saving model: {e}")
-            return False
-    
-    def load_model(self, filepath):
-        """Load trained model"""
-        try:
-            data = joblib.load(filepath)
-            self.scaler = data['scaler']
-            self.rf_model = data['rf_model']
-            self.isolation_forest = data['isolation_forest']
-            self.mlp_model = data['mlp_model']
-            self.graph = data['graph']
-            self.is_trained = data['is_trained']
-            
-            # Load LSTM model if exists
-            try:
-                self.lstm_model = tf.keras.models.load_model(filepath.replace('.pkl', '_lstm.h5'))
-            except:
-                self.lstm_model = None
-            
-            return True
-        except Exception as e:
-            print(f"Error loading model: {e}")
-            return False
+                '
