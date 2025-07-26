@@ -137,3 +137,59 @@ function App() {
       {/* Navigation */}
       <nav className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex space-x-8">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === tab.id
+                    ? 'border-indigo-500 text-indigo-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                <span className="mr-2">{tab.icon}</span>
+                {tab.name}
+              </button>
+            ))}
+          </div>
+        </div>
+      </nav>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div className="px-4 py-6 sm:px-0">
+          {activeTab === 'dashboard' && <Dashboard stats={stats} systemStatus={systemStatus} />}
+          {activeTab === 'transactions' && <TransactionFeed />}
+          {activeTab === 'risk' && <RiskScores />}
+          {activeTab === 'alerts' && <AlertPanel />}
+          {activeTab === 'system' && <SystemControl systemStatus={systemStatus} />}
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-white border-t border-gray-200 mt-12">
+        <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center">
+            <p className="text-sm text-gray-500">
+              © 2025 FinShield Link. Real-time fraud detection powered by AI.
+            </p>
+            <div className="flex space-x-4 text-sm text-gray-500">
+              {Object.entries(systemStatus).map(([service, status]) => (
+                <span key={service} className="flex items-center">
+                  <span className="mr-1">{getStatusIcon(status)}</span>
+                  <span className={getStatusColor(status)}>
+                    {service.charAt(0).toUpperCase() + service.slice(1)}
+                  </span>
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+export default App;
