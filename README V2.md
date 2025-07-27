@@ -1,13 +1,13 @@
 ## System Features:
 
-✅ One-Click Deployment: Run ```./start.sh``` or ```start.bat``` to launch everything
-✅ Real-time Transaction Ingestion: FastAPI service capturing card events with MongoDB/Redis storage
-✅ Hybrid ML Risk Engine: LSTM + Random Forest + AWS Fraud Detector + Graph ML ensemble
-✅ LLM Fine-tuning: Incremental training on streaming transaction patterns
-✅ Multi-channel Alerts: SMS, Email, Voice calls via Twilio integration
-✅ Interactive Dashboard: React-powered UI with live charts, transaction feeds, and system control
-✅ Dockerized Infrastructure: Kafka, MongoDB, Redis auto-provisioned
-✅ Health Monitoring: Real-time service status and system logs
+- ✅ One-Click Deployment: Run ```./start.sh``` or ```start.bat``` to launch everything
+- ✅ Real-time Transaction Ingestion: FastAPI service capturing card events with MongoDB/Redis storage
+- ✅ Hybrid ML Risk Engine: LSTM + Random Forest + AWS Fraud Detector + Graph ML ensemble
+- ✅ LLM Fine-tuning: Incremental training on streaming transaction patterns
+- ✅ Multi-channel Alerts: SMS, Email, Voice calls via Twilio integration
+- ✅ Interactive Dashboard: React-powered UI with live charts, transaction feeds, and system control
+- ✅ Dockerized Infrastructure: Kafka, MongoDB, Redis auto-provisioned
+- ✅ Health Monitoring: Real-time service status and system logs
 
 ## Quick Start Instructions:
 ```bash
@@ -38,11 +38,11 @@ start.bat
 
 ## Dashboard Features:
 
-📊 Real-time Dashboard: Live transaction metrics, risk distribution charts
-💳 Transaction Feed: Streaming transaction list with risk scores
-🎯 Risk Analysis: Scatter plots, model performance comparisons
-🚨 Alert Panel: Active fraud alerts and blocked transactions
-⚙️ System Control: Start/stop pipeline, view logs, health monitoring
+- 📊 Real-time Dashboard: Live transaction metrics, risk distribution charts
+- 💳 Transaction Feed: Streaming transaction list with risk scores
+- 🎯 Risk Analysis: Scatter plots, model performance comparisons
+- 🚨 Alert Panel: Active fraud alerts and blocked transactions
+- ⚙ System Control: Start/stop pipeline, view logs, health monitoring
 
 ## Architecture Highlights:
 
